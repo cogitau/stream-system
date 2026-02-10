@@ -12,10 +12,10 @@ export const concepts: Concept[] = [
     body: [
       { kind: "paragraph", text: "Emptiness is often misunderstood as nihilism. Here it means something simpler: things don’t stand on their own. What something is depends on parts, context, and the way a mind groups it into an object." },
       { kind: "heading", text: "Two Lenses" },
-      { kind: "paragraph", text: "Conventionally, things exist. You're reading this, the screen is real, your experience is happening. But ultimately, everything exists only in dependence on other things—causes, conditions, parts, and the minds that perceive them." },
-      { kind: "quote", text: "Things are empty of fixed essence—and that emptiness is exactly what allows anything to appear, change, and relate." },
+      { kind: "paragraph", text: "Conventionally, things exist. You're reading this, the screen is real, your experience is happening. But ultimately, everything exists only in dependence on other things: causes, conditions, parts, and the minds that perceive them." },
+      { kind: "quote", text: "Things are empty of fixed essence, and that emptiness is exactly what allows anything to appear, change, and relate." },
       { kind: "insight", text: "Emptiness is not a void to be feared but a fullness to be recognized. It's what makes change, growth, and liberation possible." },
-      { kind: "paragraph", text: "When we reify things—treat them as more solid and permanent than they are—we suffer. Emptiness dissolves this reification, revealing the fluid, interdependent nature of reality." },
+      { kind: "paragraph", text: "When we reify things, and treat them as more solid and permanent than they are, we suffer. Emptiness dissolves this reification, revealing the fluid, interdependent nature of reality." },
       { kind: "question", text: "What would it mean if the boundaries you take for granted were more like weather patterns than walls?" },
     ],
     sources: [
@@ -31,14 +31,14 @@ export const concepts: Concept[] = [
     desc: "Everything changes.",
     mechanism: "The signal is always updating; the mind stitches those updates into a feeling of continuity.",
     body: [
-      { kind: "paragraph", text: "Impermanence isn't just a philosophical concept—it's a direct observation. Look closely at any experience: sensations arise and pass, thoughts appear and dissolve, emotions swell and fade." },
+      { kind: "paragraph", text: "Impermanence isn't just a philosophical concept; it's a direct observation. Look closely at any experience: sensations arise and pass, thoughts appear and dissolve, emotions swell and fade." },
       { kind: "paragraph", text: "The body you had seven years ago has been completely replaced at the cellular level. The person you were yesterday exists only in memory. Change isn't happening TO a stable self; change is all there is." },
       { kind: "insight", text: "We don't suffer because things change. We suffer because we expect them not to." },
       { kind: "heading", text: "Levels of Impermanence" },
       { kind: "list", items: [
         "Gross impermanence: seasons change, people age, relationships end",
         "Subtle impermanence: moment-to-moment flux in experience",
-        "Radical impermanence: there is no 'moment' that stays—just ceaseless flow",
+        "Radical impermanence: there is no 'moment' that stays, just ceaseless flow",
       ]},
       { kind: "paragraph", text: "Contemplating impermanence isn't morbid. It's clarifying. It reveals what actually matters and loosens the grip of petty concerns." },
       { kind: "question", text: "What in your current experience is staying the same? Look closely." },
@@ -55,10 +55,10 @@ export const concepts: Concept[] = [
     desc: "A useful fiction.",
     mechanism: "Body signals, memory, and goals get bundled into a running model labeled 'me.'",
     body: [
-      { kind: "paragraph", text: "Your sense of being a continuous self—the feeling of being 'you'—is a construction. The brain builds a model of itself as an agent in the world, and this model becomes so seamless that we mistake it for reality." },
+      { kind: "paragraph", text: "Your sense of being a continuous self, the feeling of being 'you,' is a construction. The brain builds a model of itself as an agent in the world, and this model becomes so seamless that we mistake it for reality." },
       { kind: "quote", text: "The self is not a thing but a process.", attribution: "Thomas Metzinger" },
       { kind: "paragraph", text: "This self-model includes your autobiographical narrative, your sense of agency, your body boundaries, and your predictions about what 'you' would do. It's incredibly useful for navigating the world, but it's still a model, not an irreducible fact." },
-      { kind: "insight", text: "The self-model theory doesn't deny that experience happens—it clarifies what the experiencer actually is." },
+      { kind: "insight", text: "The self-model theory doesn't deny that experience happens; it clarifies what the experiencer actually is." },
       { kind: "heading", text: "Components of the Self-Model" },
       { kind: "list", items: [
         "Body ownership: the feeling that this body is 'mine'",
@@ -66,7 +66,7 @@ export const concepts: Concept[] = [
         "Narrative identity: the story of who 'I' am across time",
         "Perspective: the sense of being located here, looking out",
       ]},
-      { kind: "paragraph", text: "In some focused or altered states, parts of this model can loosen. When that happens, the \"self\" can feel less solid—even though experience continues." },
+      { kind: "paragraph", text: "In some focused or altered states, parts of this model can loosen. When that happens, the \"self\" can feel less solid, even though experience continues." },
       { kind: "question", text: "What remains when the story of 'you' goes quiet?" },
     ],
     sources: [
@@ -83,7 +83,7 @@ export const concepts: Concept[] = [
     mechanism: "The brain tags signals as 'mine' or 'world'; under certain conditions, that tagging relaxes.",
     body: [
       { kind: "paragraph", text: "Ordinary experience feels dualistic: there's a subject (you) experiencing objects (the world). You seem to be 'in here' looking 'out there.' This structure feels so basic that questioning it seems absurd." },
-      { kind: "paragraph", text: "Yet this duality is itself an appearance within consciousness. The sense of being a separate observer is part of what's being observed—another content of experience, not its container." },
+      { kind: "paragraph", text: "Yet this duality is itself an appearance within consciousness. The sense of being a separate observer is part of what's being observed, another content of experience, not its container." },
       { kind: "quote", text: "The boundary between observer and observed is often drawn by the mind, not discovered in the world." },
       { kind: "insight", text: "Nonduality doesn't mean everything is 'one' in some mystical sense. It means the apparent boundary between self and other isn't where it seems to be." },
       { kind: "paragraph", text: "Consider: when you look at a tree, where does 'seeing' happen? Is it in the tree? In your eyes? In your brain? The more you investigate, the harder it becomes to locate the boundary between seer and seen." },
@@ -101,7 +101,7 @@ export const concepts: Concept[] = [
     desc: "Resistance to what is.",
     mechanism: "A gap between expectation and reality triggers tension; holding onto the gap keeps it running.",
     body: [
-      { kind: "paragraph", text: "A common framing is that \"life is suffering.\" The observation here is narrower: there is often a pervasive unsatisfactoriness—a subtle wrongness, a sense that something is missing or needs to be different—even when nothing is overtly wrong." },
+      { kind: "paragraph", text: "A common framing is that \"life is suffering.\" The observation here is narrower: there is often a pervasive unsatisfactoriness, a subtle wrongness, a sense that something is missing or needs to be different, even when nothing is overtly wrong." },
       { kind: "heading", text: "Three Forms" },
       { kind: "list", items: [
         "Pain: obvious suffering from illness, loss, physical discomfort",
@@ -110,7 +110,7 @@ export const concepts: Concept[] = [
       ]},
       { kind: "paragraph", text: "A central amplifier is resistance: wanting what isn't here, rejecting what is here, and tightening around experience as though it should be otherwise." },
       { kind: "insight", text: "Suffering = Pain × Resistance. You can't always control pain, but you can investigate resistance." },
-      { kind: "paragraph", text: "This isn't about suppressing desires or becoming passive. It's about seeing clearly how the mind creates unnecessary suffering by fighting with reality—and discovering that this fight is optional." },
+      { kind: "paragraph", text: "This isn't about suppressing desires or becoming passive. It's about seeing clearly how the mind creates unnecessary suffering by fighting with reality, and discovering that this fight is optional." },
     ],
     sources: [
       { title: "How Emotions Are Made", author: "Lisa Feldman Barrett" },
@@ -127,7 +127,7 @@ export const concepts: Concept[] = [
     desc: "The felt texture.",
     mechanism: "Neural correlates can be mapped, but mapping is not the same as explaining why anything feels like something.",
     body: [
-      { kind: "paragraph", text: "Qualia are the felt qualities of experience—the redness of red, the painfulness of pain, the taste of coffee. They're what it's LIKE to have an experience, not just the functional or informational aspects." },
+      { kind: "paragraph", text: "Qualia are the felt qualities of experience: the redness of red, the painfulness of pain, the taste of coffee. They're what it's LIKE to have an experience, not just the functional or informational aspects." },
       { kind: "quote", text: "No amount of physical description of a bat's sonar system tells you what it's like to be a bat.", attribution: "Thomas Nagel" },
       { kind: "paragraph", text: "Qualia pose a deep puzzle: how does physical brain activity give rise to subjective experience? You can describe every neuron firing when someone sees blue, but this doesn't explain why there's something it feels like to see blue." },
       { kind: "insight", text: "Qualia are simultaneously the most obvious thing in the world (your current experience is full of them) and the most mysterious (no one knows how matter produces them)." },
@@ -148,7 +148,7 @@ export const concepts: Concept[] = [
     desc: "Controlled hallucination.",
     mechanism: "The brain generates predictions and corrects by surprise; perception is the best guess, not raw data.",
     body: [
-      { kind: "paragraph", text: "The predictive processing framework proposes that the brain is fundamentally a prediction machine. Rather than passively receiving sensory data, it actively generates predictions about what it expects to sense—and only processes the 'prediction errors' (the differences between prediction and reality)." },
+      { kind: "paragraph", text: "The predictive processing framework proposes that the brain is fundamentally a prediction machine. Rather than passively receiving sensory data, it actively generates predictions about what it expects to sense, and only processes the 'prediction errors' (the differences between prediction and reality)." },
       { kind: "heading", text: "Key Ideas" },
       { kind: "list", items: [
         "Perception is controlled hallucination: what you see is a best guess, not raw data",
@@ -221,7 +221,7 @@ export const concepts: Concept[] = [
     body: [
       { kind: "paragraph", text: "David Chalmers distinguished the 'easy problems' of consciousness (explaining cognitive functions, behavior, neural correlates) from the 'hard problem': why is there subjective experience at all? Why doesn't all this information processing happen 'in the dark,' without any felt quality?" },
       { kind: "quote", text: "Even when we have explained the performance of all the cognitive and behavioral functions, there may still remain a further unanswered question: Why is the performance of these functions accompanied by experience?", attribution: "David Chalmers" },
-      { kind: "paragraph", text: "The hard problem isn't about explaining what consciousness does—it's about explaining why there's something it's like to be conscious. This explanatory gap seems unbridgeable by standard scientific methods." },
+      { kind: "paragraph", text: "The hard problem isn't about explaining what consciousness does; it's about explaining why there's something it's like to be conscious. This explanatory gap seems unbridgeable by standard scientific methods." },
       { kind: "insight", text: "The hard problem isn't a puzzle to be solved; it may be a mystery that reveals the limits of objective explanation." },
       { kind: "heading", text: "Possible Responses" },
       { kind: "list", items: [
@@ -243,11 +243,11 @@ export const concepts: Concept[] = [
     title: "Conditionality",
     tech: "causation",
     desc: "Nothing stands alone.",
-    mechanism: "Change one upstream condition—body state, context, attention—and the downstream pattern reshapes.",
+    mechanism: "Change one upstream condition (body state, context, attention), and the downstream pattern reshapes.",
     body: [
       { kind: "paragraph", text: "Nothing in experience arrives alone. What you feel, think, and perceive is shaped by a mesh of conditions: physiology, environment, memory, expectation, and attention. Treating any element as independent tends to produce confused explanations." },
       { kind: "quote", text: "When conditions change, the experience changes. Remove a condition, and the downstream pattern dissolves." },
-      { kind: "paragraph", text: "This applies to everything: objects, thoughts, emotions, and especially the sense of self. The 'you' reading this exists only in relation to a body, a history, a language, a culture—none of which 'you' created or control." },
+      { kind: "paragraph", text: "This applies to everything: objects, thoughts, emotions, and especially the sense of self. The 'you' reading this exists only in relation to a body, a history, a language, and a culture, none of which 'you' created or control." },
       { kind: "insight", text: "Conditionality is the positive side of emptiness: things aren’t self-made, they’re condition-made." },
       { kind: "paragraph", text: "Once you track conditions, the world looks less like isolated objects colliding and more like patterns influencing patterns." },
     ],
@@ -266,8 +266,8 @@ export const concepts: Concept[] = [
     body: [
       { kind: "paragraph", text: "Nondual awareness refers to a mode of experiencing in which the usual sense of being a subject observing objects collapses. There's just experience happening, without the feeling of being a separate experiencer standing apart from it." },
       { kind: "paragraph", text: "This isn't a mystical merger with the cosmos. It's more subtle: the recognition that the sense of being a separate self is itself an appearance within consciousness, not the container of consciousness." },
-      { kind: "quote", text: "The sense of ownership can be present—or absent—without experience disappearing." },
-      { kind: "insight", text: "Nondual awareness isn't an altered state to achieve—it's the natural condition obscured by identification with thought." },
+      { kind: "quote", text: "The sense of ownership can be present or absent without experience disappearing." },
+      { kind: "insight", text: "Nondual awareness isn't an altered state to achieve; it's the natural condition obscured by identification with thought." },
       { kind: "heading", text: "Pointers" },
       { kind: "list", items: [
         "Check what the \"observer\" feels like in this moment",
@@ -290,10 +290,10 @@ export const concepts: Concept[] = [
     desc: "Unity from fragments.",
     mechanism: "Distributed regions process color, motion, and sound separately; something stitches them into one scene.",
     body: [
-      { kind: "paragraph", text: "Right now, you're having a unified conscious experience—colors, sounds, thoughts, sensations, all bound together into a single coherent scene. But the brain processes these through separate, distributed regions. How do they come together?" },
-      { kind: "paragraph", text: "This is the 'binding problem.' Color is processed in one area, motion in another, faces in another. Yet your experience isn't a disconnected jumble—it's an integrated whole. The mechanism of this integration remains mysterious." },
+      { kind: "paragraph", text: "Right now, you're having a unified conscious experience: colors, sounds, thoughts, sensations, all bound together into a single coherent scene. But the brain processes these through separate, distributed regions. How do they come together?" },
+      { kind: "paragraph", text: "This is the 'binding problem.' Color is processed in one area, motion in another, faces in another. Yet your experience isn't a disconnected jumble; it's an integrated whole. The mechanism of this integration remains mysterious." },
       { kind: "insight", text: "The unity of consciousness that feels most basic and obvious is actually one of the deepest puzzles in neuroscience." },
-      { kind: "paragraph", text: "Some theories invoke neural synchrony—neurons firing together at the same frequency. Others propose a 'global workspace' that integrates information. But none fully explain why integration should produce FELT unity." },
+      { kind: "paragraph", text: "Some theories invoke neural synchrony, with neurons firing together at the same frequency. Others propose a 'global workspace' that integrates information. But none fully explain why integration should produce FELT unity." },
       { kind: "question", text: "Right now, your experience feels like one thing. Why doesn’t it feel like dozens?" },
     ],
     sources: [
@@ -307,9 +307,9 @@ export const concepts: Concept[] = [
     title: "Metacognition",
     tech: "recursion",
     desc: "Awareness of awareness.",
-    mechanism: "Prefrontal circuits monitor ongoing cognition—confidence, error, confusion—and feed corrections back in.",
+    mechanism: "Prefrontal circuits monitor ongoing cognition (confidence, error, confusion) and feed corrections back in.",
     body: [
-      { kind: "paragraph", text: "Metacognition is cognition about cognition—the capacity to monitor and regulate your own mental processes. It's knowing that you know, doubting your certainty, recognizing when you're confused." },
+      { kind: "paragraph", text: "Metacognition is cognition about cognition: the capacity to monitor and regulate your own mental processes. It's knowing that you know, doubting your certainty, and recognizing when you're confused." },
       { kind: "paragraph", text: "This recursive capacity lets us evaluate beliefs, correct errors, and learn how to learn. It’s also a core skill in attention training: you need to notice when attention has wandered." },
       { kind: "insight", text: "Metacognition is the leverage point for cognitive change. To change a pattern, you must first be aware of the pattern." },
       { kind: "heading", text: "Levels" },
@@ -335,9 +335,9 @@ export const concepts: Concept[] = [
     mechanism: "Reward circuitry tracks the gap between expected and received; the gap itself becomes the pull.",
     body: [
       { kind: "paragraph", text: "Craving is the push-pull of wanting: reaching toward pleasant experiences, pushing away unpleasant ones, and the restless dissatisfaction that comes from not having what we want or having what we don't want." },
-      { kind: "paragraph", text: "In modern terms, craving can be understood as a mismatch between expected and received pleasure. When reality falls short, the system keeps pushing for resolution—but the target keeps moving." },
-      { kind: "insight", text: "Craving isn't about the object. It's about the gap between expectation and experience—and that gap can be watched directly." },
-      { kind: "quote", text: "The second layer of suffering—what we add on top—can be optional." },
+      { kind: "paragraph", text: "In modern terms, craving can be understood as a mismatch between expected and received pleasure. When reality falls short, the system keeps pushing for resolution, but the target keeps moving." },
+      { kind: "insight", text: "Craving isn't about the object. It's about the gap between expectation and experience, and that gap can be watched directly." },
+      { kind: "quote", text: "The second layer of suffering, what we add on top, can be optional." },
       { kind: "paragraph", text: "There’s the initial pain, and then there’s what we add: fighting it, replaying it, forecasting it. The second layer isn’t always necessary." },
       { kind: "question", text: "Next time you want something, check: are you wanting the thing, or wanting the wanting to stop?" },
     ],
@@ -354,7 +354,7 @@ export const concepts: Concept[] = [
     desc: "Balanced awareness.",
     mechanism: "When threat responses quiet and regulation strengthens, the nervous system stays steadier under change.",
     body: [
-      { kind: "paragraph", text: "Equanimity is not indifference or detachment. It's a balanced, non-reactive awareness that allows experience to be as it is—pleasant, unpleasant, or neutral—without the compulsive push-pull of craving and aversion." },
+      { kind: "paragraph", text: "Equanimity is not indifference or detachment. It's a balanced, non-reactive awareness that allows experience to be as it is: pleasant, unpleasant, or neutral, without the compulsive push-pull of craving and aversion." },
       { kind: "paragraph", text: "It's not that you don't care; it's that caring doesn't destabilize you. Joy arises, and there's equanimity. Pain arises, and there's equanimity. The weather of experience changes, but awareness remains balanced." },
       { kind: "quote", text: "Equanimity is neither apathy nor indifference. You simply stop trying to control the uncontrollable." },
       { kind: "insight", text: "Equanimity is what's left when reactivity falls away. It's not something you do; it's what remains when you stop doing." },
@@ -373,8 +373,8 @@ export const concepts: Concept[] = [
     desc: "No fixed self.",
     mechanism: "Memory, body signals, and narrative construct 'me'; loosen the construction and ownership fades while experience continues.",
     body: [
-      { kind: "paragraph", text: "Look for a fixed, independent \"self\" in immediate experience: you find thoughts, sensations, memories, intentions—but it’s surprisingly hard to locate a separate entity that owns them. The self may be better understood as a working model the mind uses to coordinate behavior." },
-      { kind: "paragraph", text: "This doesn't mean nothing exists or that you're not real. It means that what we call 'self' is a process, not a thing—a pattern of activity, not a fixed entity. The self is more like a wave than a particle." },
+      { kind: "paragraph", text: "Look for a fixed, independent \"self\" in immediate experience: you find thoughts, sensations, memories, and intentions, but it’s surprisingly hard to locate a separate entity that owns them. The self may be better understood as a working model the mind uses to coordinate behavior." },
+      { kind: "paragraph", text: "This doesn't mean nothing exists or that you're not real. It means that what we call 'self' is a process, not a thing: a pattern of activity, not a fixed entity. The self is more like a wave than a particle." },
       { kind: "quote", text: "I never can catch myself at any time without a perception, and never can observe any thing but the perception.", attribution: "David Hume" },
       { kind: "insight", text: "No-self isn't a nihilistic conclusion but a liberating recognition. What was never solid can never be threatened." },
       { kind: "heading", text: "A Simple Decomposition" },
@@ -386,7 +386,7 @@ export const concepts: Concept[] = [
         "Consciousness: awareness of objects",
       ]},
       { kind: "paragraph", text: "None of these components is a separate \"owner\", and there may be no owner hiding behind them. Taking that seriously can reduce the urge to defend an imagined territory." },
-      { kind: "question", text: "If you look right now, can you find a self—or just a flow of experience?" },
+      { kind: "question", text: "If you look right now, can you find a self, or just a flow of experience?" },
     ],
     sources: [
       { title: "Being No One", author: "Thomas Metzinger" },
