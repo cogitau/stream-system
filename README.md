@@ -4,12 +4,12 @@ An interactive, generative visualization of phenomenological concepts, modeled a
 
 This project explores **conscious experience** using a hybrid framework informed by:
 
-* Buddhist epistemology (early Buddhism, phenomenology)
+* phenomenology and first-person methods
 * Cognitive science and neuroscience
 * Systems theory and dynamical models
 * Careful philosophical restraint
 
-It is **not** a spiritual teaching, meditation guide, or metaphysical claim.
+It is **not** a spiritual teaching, self-help system, or metaphysical claim.
 It is an **exploratory model** presented through an embodied UI.
 
 ---
@@ -128,7 +128,7 @@ Examples:
 
 * Explanatory Gap
 * Is–Ought Boundary
-* Non-Conceptual Knowing (Rigpa-adjacent, carefully framed)
+* Non-Conceptual Knowing (carefully framed)
 * What-It-Is-Like (Qualia-adjacent, reframed)
 
 These concepts are:
@@ -142,6 +142,22 @@ They are boundary markers, not conclusions.
 ---
 
 ## Important design constraints (for contributors / AIs)
+
+### 0. Tone: systemic, observational, non-preachy
+
+Write like a careful lab note, not a sermon.
+
+Avoid:
+
+* religious framing (teachers, doctrines, revelations)
+* introspective instructions aimed at the reader (“Notice that…”, “Ask yourself…”)
+* new-age metaphors that assert more than they observe
+
+Prefer:
+
+* conditional language (“can”, “may”, “often”, “seems”)
+* mechanistic grounding (attention, inference, prediction error, etc.)
+* precise phenomenological description without moralizing
 
 ### 1. No metaphysical assertions
 
@@ -230,6 +246,7 @@ When adding a new concept, ask:
 2. Is it **felt**, **modeled**, **constrained**, or a **limit of explanation**?
 3. Does it add structure, or just vocabulary?
 4. Can it be written without asserting belief?
+5. Does it include a short **Mechanism** note (scientific grounding), without becoming a glossary?
 
 If any answer is unclear, do not add it yet.
 

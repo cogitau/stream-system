@@ -25,6 +25,7 @@ export type Concept = {
   title: string;
   tech: string;
   desc: string;
+  mechanism?: string;
   body: ConceptBlock[];
   sources?: Source[];
 };

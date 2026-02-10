@@ -11,6 +11,7 @@ const TYPE_MOTION: Record<ConceptType, {
   noiseAmplitude: number; // deformation intensity
   viscosity: number;      // smoothness (lower = snappier)
   radiusMult: number;     // base size multiplier
+  glowTint: string;       // rim glow tint (very desaturated, ~6% shift from white)
 }> = {
   sensation: {
     speedMult: 1.1,
@@ -19,6 +20,7 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 26,
     viscosity: 0.07,
     radiusMult: 0.95,
+    glowTint: "rgba(255, 250, 244, 0.28)",   // warm amber / bone
   },
   cognition: {
     speedMult: 0.95,
@@ -27,6 +29,7 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 18,
     viscosity: 0.05,
     radiusMult: 1.0,
+    glowTint: "rgba(248, 251, 255, 0.28)",   // cool blue-gray
   },
   reality: {
     speedMult: 0.85,
@@ -35,6 +38,7 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 20,
     viscosity: 0.055,
     radiusMult: 1.08,      // larger, heavier
+    glowTint: "rgba(248, 253, 250, 0.28)",   // desaturated green-gray / graphite
   },
   meta: {
     speedMult: 0.8,
@@ -43,10 +47,16 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 16,
     viscosity: 0.045,
     radiusMult: 1.02,
+    glowTint: "rgba(255, 255, 255, 0.28)",   // neutral white — the frame, not the content
   },
 };
 
 type CachedCanvas = HTMLCanvasElement | OffscreenCanvas;
+type CachedText = {
+  canvas: CachedCanvas;
+  width: number;
+  height: number;
+};
 
 function createCachedCanvas(width: number, height: number): CachedCanvas | null {
   if (typeof OffscreenCanvas !== "undefined") {
@@ -92,11 +102,14 @@ export class Blob {
   currentWobble: number;
   hoverFrames: number;
 
+  // Category glow tint
+  glowTint: string;
+
   // Text caches
   tagText: string;
-  private tagCanvas: CachedCanvas | null;
-  private titleCanvas: CachedCanvas | null;
-  private descCanvas: CachedCanvas | null;
+  private tagCanvas: CachedText | null;
+  private titleCanvas: CachedText | null;
+  private descCanvas: CachedText | null;
 
   constructor(concept: Concept, x: number, y: number) {
     this.concept = concept;
@@ -128,6 +141,7 @@ export class Blob {
     this.viscosity = motion.viscosity;
     this.currentWobble = 0;
     this.hoverFrames = 0;
+    this.glowTint = motion.glowTint;
     this.tagText = (this.concept.tech || this.concept.type).toUpperCase();
     this.tagCanvas = this.renderTextCache(
       this.tagText,
@@ -164,13 +178,19 @@ export class Blob {
     font: string,
     width: number,
     height: number
-  ): CachedCanvas | null {
+  ): CachedText | null {
     const canvas = createCachedCanvas(width, height);
     if (!canvas) return null;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return null;
 
+    const dpr =
+      typeof window !== "undefined" ? Math.max(1, window.devicePixelRatio || 1) : 1;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -178,7 +198,7 @@ export class Blob {
     ctx.fillStyle = "rgba(255,255,255,1)";
     ctx.fillText(text, width / 2, height / 2);
 
-    return canvas;
+    return { canvas, width, height };
   }
 
   update(
@@ -272,12 +292,12 @@ export class Blob {
     ctx.fillStyle = CONFIG.colors.fill;
     ctx.fill();
 
-    // Rim glow
+    // Rim glow — tinted per category at ~6% intensity
     ctx.lineWidth = 1;
     const hoverStrength = isHovered ? Math.min(this.hoverFrames / 8, 1) : 0;
     if (hoverStrength > 0.15) {
       ctx.strokeStyle = CONFIG.colors.strokeActive;
-      ctx.shadowColor = CONFIG.colors.glow;
+      ctx.shadowColor = this.glowTint;
       ctx.shadowBlur = (8 + quality * 10) * hoverStrength;
     } else {
       ctx.strokeStyle = CONFIG.colors.stroke;
@@ -307,7 +327,13 @@ export class Blob {
       const tagH = this.tagCanvas.height;
       ctx.save();
       ctx.globalAlpha *= tagAlpha;
-      ctx.drawImage(this.tagCanvas as CanvasImageSource, cx - tagW / 2, cy - 20 - tagH / 2);
+      ctx.drawImage(
+        this.tagCanvas.canvas as CanvasImageSource,
+        cx - tagW / 2,
+        cy - 20 - tagH / 2,
+        tagW,
+        tagH
+      );
       ctx.restore();
     }
 
@@ -316,7 +342,13 @@ export class Blob {
       const titleH = this.titleCanvas.height;
       ctx.save();
       ctx.globalAlpha *= titleAlpha;
-      ctx.drawImage(this.titleCanvas as CanvasImageSource, cx - titleW / 2, cy + 8 - titleH / 2);
+      ctx.drawImage(
+        this.titleCanvas.canvas as CanvasImageSource,
+        cx - titleW / 2,
+        cy + 8 - titleH / 2,
+        titleW,
+        titleH
+      );
       ctx.restore();
     }
 
@@ -326,7 +358,13 @@ export class Blob {
       const descH = this.descCanvas.height;
       ctx.save();
       ctx.globalAlpha *= 0.68 * textOpacity;
-      ctx.drawImage(this.descCanvas as CanvasImageSource, cx - descW / 2, cy + 34 - descH / 2);
+      ctx.drawImage(
+        this.descCanvas.canvas as CanvasImageSource,
+        cx - descW / 2,
+        cy + 34 - descH / 2,
+        descW,
+        descH
+      );
       ctx.restore();
     }
   }

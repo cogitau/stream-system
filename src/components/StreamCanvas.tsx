@@ -18,13 +18,22 @@ interface StreamCanvasProps {
   introComplete: boolean;
   viewScale?: number;
   viewDim?: number;
+  onPerfUpdate?: (stats: { fps: number; quality: number }) => void;
 }
 
 const CATEGORY_ORDER: ConceptType[] = ["sensation", "cognition", "reality", "meta"];
 
 export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
   function StreamCanvas(
-    { activeFilter, isModalOpen, onConceptClick, introComplete, viewScale = 1, viewDim = 0 },
+    {
+      activeFilter,
+      isModalOpen,
+      onConceptClick,
+      introComplete,
+      viewScale = 1,
+      viewDim = 0,
+      onPerfUpdate,
+    },
     ref
   ) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -51,6 +60,7 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
     const isModalOpenRef = useRef(isModalOpen);
     const introCompleteRef = useRef(introComplete);
     const onConceptClickRef = useRef(onConceptClick);
+    const onPerfUpdateRef = useRef(onPerfUpdate);
 
     viewRef.current.scale = viewScale;
     viewRef.current.dim = viewDim;
@@ -80,6 +90,10 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
     useEffect(() => {
       onConceptClickRef.current = onConceptClick;
     }, [onConceptClick]);
+
+    useEffect(() => {
+      onPerfUpdateRef.current = onPerfUpdate;
+    }, [onPerfUpdate]);
 
     useImperativeHandle(
       ref,
@@ -229,6 +243,15 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
           }
         }
         perf.lastTs = ts;
+
+        if (onPerfUpdateRef.current && perf.frame % 12 === 0) {
+          const fps = 1000 / Math.max(perf.emaFrameMs, 0.001);
+          onPerfUpdateRef.current({
+            fps: Math.max(0, Math.min(120, fps)),
+            quality: perf.quality,
+          });
+        }
+
         return perf.quality;
       };
 
@@ -368,7 +391,7 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
           transform: viewScale !== 1 ? `scale(${viewScale})` : undefined,
           transformOrigin: "center",
           willChange: "transform, opacity",
-          transition: "transform 620ms cubic-bezier(0.22, 1, 0.36, 1), opacity 620ms ease",
+          transition: "none",
         }}
       />
     );

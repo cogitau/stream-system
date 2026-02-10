@@ -14,11 +14,16 @@ export default function Home() {
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [activeFilter, setActiveFilter] = useState<ConceptType | "all">("all");
   const [introComplete, setIntroComplete] = useState(false);
+  const [showPerf, setShowPerf] = useState(false);
+  const [perfStats, setPerfStats] = useState({ fps: 0, quality: 1 });
   const canvasRef = useRef<StreamCanvasRef>(null);
-  const zoomDeltaRef = useRef(0);
-  const lastZoomChangeRef = useRef(0);
-  const transitionRef = useRef<{ swap?: number; settle?: number }>({});
-  const inFlightRef = useRef(false);
+  const zoomIntentRef = useRef(0);
+  const zoomRafRef = useRef<number | null>(null);
+  const lastWheelTsRef = useRef(0);
+  const switchedRef = useRef(false);
+  const switchCooldownUntilRef = useRef(0);
+  const gestureDirectionRef = useRef<0 | 1 | -1>(0);
+  const settleLockUntilRef = useRef(0);
   const [viewScale, setViewScale] = useState(1);
   const [viewDim, setViewDim] = useState(0);
 
@@ -33,82 +38,126 @@ export default function Home() {
     setIntroComplete(true);
   }, []);
 
-  const cycleCategory = useCallback(
-    (step: 1 | -1) => {
+  const handlePerfUpdate = useCallback((stats: { fps: number; quality: number }) => {
+    setPerfStats(stats);
+  }, []);
+
+  const cycleCategory = useCallback((step: 1 | -1) => {
+    setActiveFilter((prev) => {
       let nextType: ConceptType;
-      if (activeFilter === "all") {
+      if (prev === "all") {
         nextType = step > 0 ? CATEGORY_RING[0] : CATEGORY_RING[CATEGORY_RING.length - 1];
       } else {
-        const currentIndex = CATEGORY_RING.indexOf(activeFilter);
+        const currentIndex = CATEGORY_RING.indexOf(prev);
         const nextIndex =
           (currentIndex + step + CATEGORY_RING.length) % CATEGORY_RING.length;
         nextType = CATEGORY_RING[nextIndex];
       }
-      killAndReset(nextType);
-    },
-    [activeFilter, killAndReset]
-  );
-
-  const transitionCategory = useCallback(
-    (step: 1 | -1) => {
-      if (inFlightRef.current) return;
-      inFlightRef.current = true;
-
-      // Zoom direction matches gesture:
-      // - step=+1 (scroll down / "zoom out") => zoom out
-      // - step=-1 (scroll up / "zoom in")  => zoom in
-      setViewScale(step > 0 ? 0.86 : 1.14);
-      setViewDim(1);
-
-      // Swap category at "furthest" point, then ease back in.
-      transitionRef.current.swap = window.setTimeout(() => {
-        cycleCategory(step);
-      }, 180);
-
-      transitionRef.current.settle = window.setTimeout(() => {
-        setViewScale(1);
-        setViewDim(0);
-        inFlightRef.current = false;
-      }, 620);
-    },
-    [cycleCategory]
-  );
+      return nextType;
+    });
+    canvasRef.current?.reset();
+  }, []);
 
   useEffect(() => {
+    const tickZoom = () => {
+      const now = performance.now();
+      let intent = zoomIntentRef.current;
+
+      // Trigger category switch once per gesture as we approach max zoom intent.
+      if (!switchedRef.current && Math.abs(intent) >= 0.92) {
+        cycleCategory(intent > 0 ? 1 : -1);
+        switchedRef.current = true;
+        switchCooldownUntilRef.current = now + 700;
+        intent *= 0.56;
+      }
+
+      // Continuous zoom response (positive intent = zoom out, negative = zoom in).
+      const targetScale = 1 - intent * 0.16;
+      const targetDim = Math.min(Math.abs(intent) * 0.9, 1);
+      setViewScale((prev) => prev + (targetScale - prev) * 0.28);
+      setViewDim((prev) => prev + (targetDim - prev) * 0.24);
+
+      // Decay intent once wheel input calms down.
+      if (now - lastWheelTsRef.current > 40) {
+        intent *= 0.86;
+      }
+      zoomIntentRef.current = intent;
+
+      // Unlock switching only after cooldown + full settle.
+      if (
+        switchedRef.current &&
+        now > switchCooldownUntilRef.current &&
+        Math.abs(intent) < 0.08 &&
+        now - lastWheelTsRef.current > 140
+      ) {
+        switchedRef.current = false;
+      }
+
+      const done =
+        Math.abs(intent) < 0.012 &&
+        Math.abs(targetScale - 1) < 0.008 &&
+        now - lastWheelTsRef.current > 120;
+
+      if (done) {
+        zoomIntentRef.current = 0;
+        setViewScale(1);
+        setViewDim(0);
+        gestureDirectionRef.current = 0;
+        switchedRef.current = false;
+        settleLockUntilRef.current = now + 180;
+        zoomRafRef.current = null;
+        return;
+      }
+
+      zoomRafRef.current = window.requestAnimationFrame(tickZoom);
+    };
+
     const onWheel = (e: WheelEvent) => {
       if (!introComplete || selectedConcept) return;
-
-      // Support both:
-      // - pinch-to-zoom out (ctrl+wheel in modern browsers)
-      // - plain wheel/scroll as an intentional category traversal gesture
       e.preventDefault();
-
       const now = performance.now();
-      if (now - lastZoomChangeRef.current < 280) return;
 
-      zoomDeltaRef.current += e.deltaY;
-      const threshold = 90;
-      if (Math.abs(zoomDeltaRef.current) < threshold) return;
+      // Absorb inertial tail right after a settle.
+      if (now < settleLockUntilRef.current) return;
 
-      if (zoomDeltaRef.current > 0) {
-        transitionCategory(1);
-      } else {
-        transitionCategory(-1);
+      // Ignore inertial tail after a switch so it doesn't retrigger.
+      if (switchedRef.current && now < switchCooldownUntilRef.current) return;
+
+      const magnitude = Math.abs(e.deltaY);
+      // Filter tiny wheel noise/inertia values.
+      if (magnitude < 3) return;
+
+      const filtered = Math.sign(e.deltaY) * (magnitude - 3);
+      const direction: 1 | -1 = filtered > 0 ? 1 : -1;
+
+      // Lock gesture direction until the zoom fully settles.
+      if (gestureDirectionRef.current === 0) {
+        gestureDirectionRef.current = direction;
+      } else if (direction !== gestureDirectionRef.current) {
+        return;
       }
-      zoomDeltaRef.current = 0;
-      lastZoomChangeRef.current = now;
+
+      const clamped = Math.max(-120, Math.min(120, filtered));
+      zoomIntentRef.current = Math.max(
+        -1.25,
+        Math.min(1.25, zoomIntentRef.current + clamped * 0.0034)
+      );
+      lastWheelTsRef.current = now;
+
+      if (!zoomRafRef.current) {
+        zoomRafRef.current = window.requestAnimationFrame(tickZoom);
+      }
     };
 
     window.addEventListener("wheel", onWheel, { passive: false });
-    return () => window.removeEventListener("wheel", onWheel);
-  }, [transitionCategory, introComplete, selectedConcept]);
-
-  useEffect(() => {
     return () => {
-      if (transitionRef.current.swap) window.clearTimeout(transitionRef.current.swap);
-      if (transitionRef.current.settle) window.clearTimeout(transitionRef.current.settle);
+      window.removeEventListener("wheel", onWheel);
+      if (zoomRafRef.current) {
+        window.cancelAnimationFrame(zoomRafRef.current);
+        zoomRafRef.current = null;
+      }
     };
-  }, []);
+  }, [cycleCategory, introComplete, selectedConcept]);
 
   return (
     <div className="fixed inset-0 bg-[#030303] overflow-hidden">
@@ -120,6 +169,7 @@ export default function Home() {
         introComplete={introComplete}
         viewScale={viewScale}
         viewDim={viewDim}
+        onPerfUpdate={handlePerfUpdate}
       />
 
       {/* UI layer */}
@@ -129,6 +179,27 @@ export default function Home() {
           activeFilter={activeFilter}
           onFilterChange={killAndReset}
         />
+        <button
+          type="button"
+          aria-label={showPerf ? "Hide performance stats" : "Show performance stats"}
+          onClick={() => setShowPerf((v) => !v)}
+          className="pointer-events-auto absolute top-5 right-6 text-white/18 hover:text-white/55 transition-colors text-xl leading-none"
+        >
+          •
+        </button>
+        {showPerf && (
+          <div className="pointer-events-none absolute top-12 right-6 bg-black/45 border border-white/10 rounded px-3 py-2">
+            <div className="text-[9px] uppercase tracking-[0.24em] text-white/35 mb-1">
+              Perf
+            </div>
+            <div className="text-[11px] text-white/80 tabular-nums">
+              FPS {Math.round(perfStats.fps)}
+            </div>
+            <div className="text-[11px] text-white/55 tabular-nums">
+              Quality {Math.round(perfStats.quality * 100)}%
+            </div>
+          </div>
+        )}
       </div>
 
       <ContentPanel
