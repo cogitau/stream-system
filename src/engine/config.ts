@@ -10,10 +10,10 @@ export const CONFIG = {
   maxBlobs: 8,
   colors: {
     fill: "rgba(8, 8, 12, 0.65)",
-    stroke: "rgba(255, 255, 255, 0.32)",
+    stroke: "rgba(255, 255, 255, 0.40)",
     strokeActive: "rgba(255, 255, 255, 0.85)",
-    glow: "rgba(255, 255, 255, 0.28)",
+    glow: "rgba(255, 255, 255, 0.36)",
     text: "rgba(255, 255, 255, 0.95)",
-    textMuted: "rgba(255, 255, 255, 0.58)",
+    textMuted: "rgba(255, 255, 255, 0.66)",
   },
 } as const;

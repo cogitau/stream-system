@@ -14,6 +14,7 @@ export default function Home() {
   const [selectedConcept, setSelectedConcept] = useState<Concept | null>(null);
   const [activeFilter, setActiveFilter] = useState<ConceptType | "all">("all");
   const [introComplete, setIntroComplete] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [showPerf, setShowPerf] = useState(false);
   const [perfStats, setPerfStats] = useState({ fps: 0, quality: 1 });
   const canvasRef = useRef<StreamCanvasRef>(null);
@@ -179,6 +180,30 @@ export default function Home() {
           activeFilter={activeFilter}
           onFilterChange={killAndReset}
         />
+        <button
+          type="button"
+          aria-label={showInfo ? "Hide project info" : "Show project info"}
+          aria-expanded={showInfo}
+          onClick={() => setShowInfo((v) => !v)}
+          className="pointer-events-auto absolute top-5 right-16 inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-white/35 bg-white/10 text-[11px] leading-none text-white/75 hover:text-white hover:bg-white/20 hover:border-white/60 transition-colors"
+        >
+          i
+        </button>
+        {showInfo && (
+          <div className="pointer-events-auto absolute top-14 right-6 w-[min(780px,calc(100vw-3rem))] rounded-sm border border-white/28 bg-[#12151b]/94 shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-[2px] px-7 py-6">
+            <button
+              type="button"
+              aria-label="Close project info"
+              onClick={() => setShowInfo(false)}
+              className="absolute top-3 right-3 text-white/45 hover:text-white/85 transition-colors text-base leading-none"
+            >
+              x
+            </button>
+            <div className="pr-8 text-white/88 font-light leading-relaxed text-[15px] md:text-base tracking-[0.012em] whitespace-pre-line">
+              {"I built this as a way to externalize how I think about attention, perception, and cognition, not as ideas to explain, but as systems to observe. Visual dynamics felt like a better medium than essays. Motion, instability, and interaction mirror aspects of experience that are hard to capture in static language.\n\nThis isn't meant to instruct or persuade. It's a working model, influenced by cognitive science, systems thinking, and phenomenological traditions, presented with restraint. What's here is intentionally incomplete. The gaps matter as much as the structure."}
+            </div>
+          </div>
+        )}
         <button
           type="button"
           aria-label={showPerf ? "Hide performance stats" : "Show performance stats"}

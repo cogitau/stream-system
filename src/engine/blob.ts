@@ -28,7 +28,7 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 26,
     viscosity: 0.07,
     radiusMult: 0.95,
-    glowTint: "rgba(255, 250, 244, 0.28)",   // warm amber / bone
+    glowTint: "rgba(255, 250, 244, 0.36)",   // warm amber / bone
   },
   cognition: {
     speedMult: 0.95,
@@ -41,7 +41,7 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 18,
     viscosity: 0.05,
     radiusMult: 1.0,
-    glowTint: "rgba(248, 251, 255, 0.28)",   // cool blue-gray
+    glowTint: "rgba(248, 251, 255, 0.36)",   // cool blue-gray
   },
   reality: {
     speedMult: 0.85,
@@ -54,7 +54,7 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 20,
     viscosity: 0.055,
     radiusMult: 1.08,      // larger, heavier
-    glowTint: "rgba(248, 253, 250, 0.28)",   // desaturated green-gray / graphite
+    glowTint: "rgba(248, 253, 250, 0.36)",   // desaturated green-gray / graphite
   },
   meta: {
     speedMult: 0.8,
@@ -67,7 +67,7 @@ const TYPE_MOTION: Record<ConceptType, {
     noiseAmplitude: 16,
     viscosity: 0.045,
     radiusMult: 1.02,
-    glowTint: "rgba(255, 255, 255, 0.28)",   // neutral white — the frame, not the content
+    glowTint: "rgba(255, 255, 255, 0.36)",   // neutral white — the frame, not the content
   },
 };
 
@@ -389,7 +389,7 @@ export class Blob {
     const textOpacity = this.textAlpha;
     if (textOpacity < 0.01) return;
 
-    const tagAlpha = (isHovered ? 0.88 : 0.45) * textOpacity;
+    const tagAlpha = (isHovered ? 0.88 : 0.53) * textOpacity;
     const titleAlpha = (isHovered ? 0.95 : 0.85) * textOpacity;
 
     if (this.tagCanvas) {
@@ -427,7 +427,7 @@ export class Blob {
       const descW = this.descCanvas.width;
       const descH = this.descCanvas.height;
       ctx.save();
-      ctx.globalAlpha *= 0.68 * textOpacity;
+      ctx.globalAlpha *= 0.76 * textOpacity;
       ctx.drawImage(
         this.descCanvas.canvas as CanvasImageSource,
         cx - descW / 2,

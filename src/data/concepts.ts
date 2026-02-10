@@ -165,6 +165,53 @@ export const concepts: Concept[] = [
     ],
   },
   {
+    id: "causal-opacity",
+    type: "cognition",
+    title: "Causal Opacity",
+    tech: "inference",
+    desc: "Hidden filters, confident stories.",
+    mechanism: "Early salience filters shape what enters awareness, then language networks generate post-hoc explanations that feel primary.",
+    body: [
+      { kind: "paragraph", text: "A mind can feel certain about why it thinks or feels something while missing the main causes. By the time a thought becomes conscious, earlier filters may have already selected which possibilities are emotionally relevant and which are ignored." },
+      { kind: "paragraph", text: "This can make interpretation drift in a biased direction without obvious signs of bias. Neutral or positive frames may be dropped early, while threat-heavy frames pass through and feel like objective truth." },
+      { kind: "insight", text: "Conscious explanation often reports the result of a process, not the full process itself." },
+      { kind: "heading", text: "Two Layers" },
+      { kind: "list", items: [
+        "Upstream filtering: fast, mostly hidden relevance-gating before explicit thought",
+        "Narrative closure: coherent verbal stories that explain the selected output",
+      ]},
+      { kind: "question", text: "When a conclusion feels immediate, which parts were likely decided before words appeared?" },
+    ],
+    sources: [
+      { title: "The Predictive Mind", author: "Jakob Hohwy" },
+      { title: "Strangers to Ourselves", author: "Timothy D. Wilson" },
+    ],
+  },
+  {
+    id: "attentional-contraction",
+    type: "cognition",
+    title: "Attentional Contraction",
+    tech: "salience",
+    desc: "When focus narrows under pull.",
+    mechanism: "Salience and reward signals tighten attentional scope around one target, reducing contextual integration and increasing perceived urgency.",
+    body: [
+      { kind: "paragraph", text: "Attention can become tightly zoomed around a single object, fear, or goal until it feels like the only thing that matters. In that state, the wider field is still present but has less influence on decisions and emotion." },
+      { kind: "paragraph", text: "This narrowing can support short bursts of performance, but it can also create fragility. When well-being depends on one narrow target, small disruptions can feel disproportionately large." },
+      { kind: "insight", text: "A narrowed mind can feel precise, yet still lose important context." },
+      { kind: "heading", text: "Typical Signature" },
+      { kind: "list", items: [
+        "Heightened urgency around one thread",
+        "Reduced sensitivity to alternatives",
+        "Faster reactivity when that thread is threatened",
+      ]},
+      { kind: "question", text: "How often does urgency come from the object itself, and how often from the width of the attentional frame?" },
+    ],
+    sources: [
+      { title: "The Craving Mind", author: "Judson Brewer" },
+      { title: "Surfing Uncertainty", author: "Andy Clark" },
+    ],
+  },
+  {
     id: "hard-problem",
     type: "meta",
     title: "Hard Problem",
