@@ -11,14 +11,14 @@ function renderBlock(block: ConceptBlock, index: number) {
   switch (block.kind) {
     case "paragraph":
       return (
-        <p key={index} className="text-white/70 font-light leading-relaxed text-sm tracking-wide mb-4">
+        <p key={index} className="mb-4">
           {block.text}
         </p>
       );
 
     case "heading":
       return (
-        <h3 key={index} className="text-white/80 text-lg font-light mt-6 mb-3">
+        <h3 key={index} className="text-white/80 text-base font-light mt-6 mb-3 tracking-wide uppercase">
           {block.text}
         </h3>
       );
@@ -26,7 +26,7 @@ function renderBlock(block: ConceptBlock, index: number) {
     case "quote":
       return (
         <blockquote key={index} className="my-4 pl-4 border-l border-white/20">
-          <p className="text-white/60 italic text-sm">{block.text}</p>
+          <p className="text-white/60 italic">{block.text}</p>
           {block.attribution && (
             <cite className="block text-white/40 text-xs mt-2 not-italic">— {block.attribution}</cite>
           )}
@@ -35,21 +35,21 @@ function renderBlock(block: ConceptBlock, index: number) {
 
     case "insight":
       return (
-        <div key={index} className="my-4 p-4 bg-white/5 border-l-2 border-white/30 text-white/80 text-sm font-light">
+        <div key={index} className="my-4 text-white/80">
           {block.text}
         </div>
       );
 
     case "question":
       return (
-        <p key={index} className="my-4 text-white/60 italic text-sm">
+        <p key={index} className="my-4 text-white/60 italic">
           {block.text}
         </p>
       );
 
     case "list":
       return (
-        <ul key={index} className="my-4 pl-5 list-disc text-white/70 text-sm font-light space-y-1">
+        <ul key={index} className="my-4 pl-5 list-disc space-y-1">
           {block.items.map((item, i) => (
             <li key={i}>{item}</li>
           ))}

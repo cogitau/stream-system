@@ -58,7 +58,6 @@ export const concepts: Concept[] = [
         "Radical impermanence: there is no 'moment' that stays—just ceaseless flow",
       ]},
       { kind: "paragraph", text: "Contemplating impermanence isn't morbid. It's clarifying. It reveals what actually matters and loosens the grip of petty concerns." },
-      { kind: "question", text: "If everything you're experiencing right now will be gone in an instant, what does that change about how you hold it?" },
     ],
     sources: [
       { title: "No Death, No Fear", author: "Thich Nhat Hanh" },
@@ -102,7 +101,6 @@ export const concepts: Concept[] = [
       { kind: "quote", text: "The eye with which I see God is the same eye with which God sees me.", attribution: "Meister Eckhart" },
       { kind: "insight", text: "Nonduality doesn't mean everything is 'one' in some mystical sense. It means the apparent boundary between self and other isn't where it seems to be." },
       { kind: "paragraph", text: "Consider: when you look at a tree, where does 'seeing' happen? Is it in the tree? In your eyes? In your brain? The more you investigate, the harder it becomes to locate the boundary between seer and seen." },
-      { kind: "question", text: "Can you find the place where 'you' end and 'experience' begins?" },
     ],
     sources: [
       { title: "I Am That", author: "Nisargadatta Maharaj" },
@@ -126,7 +124,6 @@ export const concepts: Concept[] = [
       { kind: "paragraph", text: "The mechanism of suffering is craving (taṇhā) and resistance. We want what we don't have, don't want what we have, and struggle against the way things are." },
       { kind: "insight", text: "Suffering = Pain × Resistance. You can't always control pain, but you can investigate resistance." },
       { kind: "paragraph", text: "This isn't about suppressing desires or becoming passive. It's about seeing clearly how the mind creates unnecessary suffering by fighting with reality—and discovering that this fight is optional." },
-      { kind: "question", text: "What would this moment be like if you weren't trying to make it different?" },
     ],
     sources: [
       { title: "What the Buddha Taught", author: "Walpola Rahula" },
@@ -146,7 +143,6 @@ export const concepts: Concept[] = [
       { kind: "paragraph", text: "Split-brain experiments revealed this dramatically: when the right hemisphere was given an instruction to walk, and the left hemisphere (which controls speech) was asked why the person stood up, it would confabulate: 'I wanted to get a drink.'" },
       { kind: "insight", text: "We don't have privileged access to why we do what we do. The 'reasons' we give are often post-hoc stories." },
       { kind: "paragraph", text: "This isn't a defect—it's a feature. The brain is a prediction and explanation machine. But it means our confident narratives about our motivations, beliefs, and choices deserve more skepticism than we typically give them." },
-      { kind: "question", text: "How would you know if the reason you just gave for something was confabulated?" },
     ],
     sources: [
       { title: "The Interpreter", author: "Michael Gazzaniga" },
@@ -166,7 +162,6 @@ export const concepts: Concept[] = [
       { kind: "insight", text: "Qualia are simultaneously the most obvious thing in the world (your current experience is full of them) and the most mysterious (no one knows how matter produces them)." },
       { kind: "separator" },
       { kind: "paragraph", text: "Some philosophers deny qualia exist as irreducible features of reality. Others argue they're the only thing we know for certain. This debate gets at the heart of the mind-body problem." },
-      { kind: "question", text: "Look at something blue. Can you separate the information 'this is blue' from the experience of blueness?" },
     ],
     sources: [
       { title: "What Is It Like to Be a Bat?", author: "Thomas Nagel" },
@@ -190,7 +185,6 @@ export const concepts: Concept[] = [
       ]},
       { kind: "insight", text: "You don't perceive the world; you perceive your model of the world, updated by sensory discrepancies." },
       { kind: "paragraph", text: "This framework explains phenomena from visual illusions to placebo effects to the therapeutic power of reframing. If the brain is a prediction machine, changing predictions changes experience." },
-      { kind: "question", text: "What predictions are you making right now that you're not aware of?" },
     ],
     sources: [
       { title: "Surfing Uncertainty", author: "Andy Clark" },
@@ -240,7 +234,6 @@ export const concepts: Concept[] = [
         "Open attention: receptive awareness without a narrow focus",
       ]},
       { kind: "paragraph", text: "Meditation training often involves deliberately manipulating attention—narrowing it (concentration) or widening it (open awareness). This reveals attention as a skill that can be trained, not a fixed resource." },
-      { kind: "question", text: "What are you not noticing right now because of where your attention is directed?" },
     ],
     sources: [
       { title: "The Invisible Gorilla", author: "Christopher Chabris & Daniel Simons" },
@@ -259,7 +252,6 @@ export const concepts: Concept[] = [
       { kind: "paragraph", text: "This applies to everything: objects, thoughts, emotions, and especially the sense of self. The 'you' reading this exists only in relation to a body, a history, a language, a culture—none of which 'you' created or control." },
       { kind: "insight", text: "Dependent origination is the positive face of emptiness. Things are empty of inherent existence because they exist dependently." },
       { kind: "paragraph", text: "Understanding dependent origination dissolves the illusion of isolated entities bouncing off each other. Reality is more like a web, a process, a dance—with no fixed nodes, only patterns of relationship." },
-      { kind: "question", text: "Can you find anything in your experience that doesn't depend on something else?" },
     ],
     sources: [
       { title: "Dependent Arising", author: "Ajahn Brahm" },
@@ -268,7 +260,7 @@ export const concepts: Concept[] = [
   },
   {
     id: "nondual-awareness",
-    type: "contemplative",
+    type: "meta",
     title: "Nondual Awareness",
     tech: "recognition",
     desc: "Prior to separation.",
@@ -302,7 +294,6 @@ export const concepts: Concept[] = [
       { kind: "paragraph", text: "This is the 'binding problem.' Color is processed in one area, motion in another, faces in another. Yet your experience isn't a disconnected jumble—it's an integrated whole. The mechanism of this integration remains mysterious." },
       { kind: "insight", text: "The unity of consciousness that feels most basic and obvious is actually one of the deepest puzzles in neuroscience." },
       { kind: "paragraph", text: "Some theories invoke neural synchrony—neurons firing together at the same frequency. Others propose a 'global workspace' that integrates information. But none fully explain why integration should produce FELT unity." },
-      { kind: "question", text: "Is your experience really as unified as it seems? Or is that unity itself a construction?" },
     ],
     sources: [
       { title: "A Universe of Consciousness", author: "Gerald Edelman & Giulio Tononi" },
@@ -327,7 +318,6 @@ export const concepts: Concept[] = [
         "Practice-based knowledge differs from propositional knowledge",
       ]},
       { kind: "paragraph", text: "For contemplative practice, this is significant: attention to bodily sensation isn't separate from cognitive work. Body awareness IS awareness training." },
-      { kind: "question", text: "How is your body position right now affecting your mental state?" },
     ],
     sources: [
       { title: "Philosophy in the Flesh", author: "George Lakoff & Mark Johnson" },
@@ -370,7 +360,6 @@ export const concepts: Concept[] = [
       { kind: "insight", text: "Craving isn't about the object. It's about the relationship between expectation and experience—a relationship that can be observed and deconstructed." },
       { kind: "quote", text: "The second arrow is optional.", attribution: "Buddhist saying" },
       { kind: "paragraph", text: "The first arrow is painful sensation. The second arrow is the craving and aversion we add to it. Contemplative practice doesn't eliminate the first arrow, but it can prevent the second—by fully allowing experience without the struggle to change it." },
-      { kind: "question", text: "What are you craving right now? Can you feel the texture of that wanting itself?" },
     ],
     sources: [
       { title: "The Craving Mind", author: "Judson Brewer" },
@@ -379,7 +368,7 @@ export const concepts: Concept[] = [
   },
   {
     id: "equanimity",
-    type: "contemplative",
+    type: "meta",
     title: "Equanimity",
     tech: "balance",
     desc: "Balanced awareness.",
@@ -389,7 +378,6 @@ export const concepts: Concept[] = [
       { kind: "quote", text: "Equanimity is neither apathy nor indifference. You simply stop trying to control the uncontrollable." },
       { kind: "insight", text: "Equanimity is what's left when reactivity falls away. It's not something you do; it's what remains when you stop doing." },
       { kind: "paragraph", text: "This quality is cultivated through practice: noticing reactivity, allowing experience, letting go of the struggle. Over time, the mind becomes like water—disturbed by the wind, but naturally returning to stillness." },
-      { kind: "question", text: "What would it feel like to completely allow this moment to be exactly as it is?" },
     ],
     sources: [
       { title: "A Path with Heart", author: "Jack Kornfield" },

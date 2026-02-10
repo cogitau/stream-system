@@ -5,7 +5,6 @@ export const DOMAINS: Domain[] = [
   { type: "cognition", label: "Cognition", color: "#7eb8da" },
   { type: "reality", label: "Reality", color: "#9b8ac4" },
   { type: "meta", label: "Meta", color: "#81b29a" },
-  { type: "contemplative", label: "Contemplative", color: "#b8a9c9" },
 ];
 
 export const DOMAIN_MAP: Record<ConceptType, Domain> = Object.fromEntries(

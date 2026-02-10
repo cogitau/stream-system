@@ -44,15 +44,22 @@ const TYPE_MOTION: Record<ConceptType, {
     viscosity: 0.045,
     radiusMult: 1.02,
   },
-  contemplative: {
-    speedMult: 0.75,
-    driftMult: 0.65,
-    noiseSpeed: 0.001,     // very slow, serene
-    noiseAmplitude: 15,
-    viscosity: 0.04,
-    radiusMult: 1.05,
-  },
 };
+
+type CachedCanvas = HTMLCanvasElement | OffscreenCanvas;
+
+function createCachedCanvas(width: number, height: number): CachedCanvas | null {
+  if (typeof OffscreenCanvas !== "undefined") {
+    return new OffscreenCanvas(width, height);
+  }
+  if (typeof document !== "undefined") {
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    return canvas;
+  }
+  return null;
+}
 
 export class Blob {
   concept: Concept;
@@ -83,6 +90,13 @@ export class Blob {
 
   // Mouse speed reactivity
   currentWobble: number;
+  hoverFrames: number;
+
+  // Text caches
+  tagText: string;
+  private tagCanvas: CachedCanvas | null;
+  private titleCanvas: CachedCanvas | null;
+  private descCanvas: CachedCanvas | null;
 
   constructor(concept: Concept, x: number, y: number) {
     this.concept = concept;
@@ -113,11 +127,31 @@ export class Blob {
     this.noiseAmplitude = motion.noiseAmplitude;
     this.viscosity = motion.viscosity;
     this.currentWobble = 0;
+    this.hoverFrames = 0;
+    this.tagText = (this.concept.tech || this.concept.type).toUpperCase();
+    this.tagCanvas = this.renderTextCache(
+      this.tagText,
+      '300 10px ui-sans-serif, system-ui, -apple-system, "Inter", sans-serif',
+      280,
+      24
+    );
+    this.titleCanvas = this.renderTextCache(
+      this.concept.title,
+      '300 26px ui-sans-serif, system-ui, -apple-system, "Inter", sans-serif',
+      520,
+      50
+    );
+    this.descCanvas = this.renderTextCache(
+      this.concept.desc,
+      '300 11px ui-sans-serif, system-ui, -apple-system, "Inter", sans-serif',
+      520,
+      24
+    );
 
     this.vertices = [];
     const step = (Math.PI * 2) / CONFIG.vertexCount;
     for (let i = 0; i < CONFIG.vertexCount; i++) {
-      this.vertices.push(new Vertex(i * step, i));
+      this.vertices.push(new Vertex(i * step, i, x, y));
     }
   }
 
@@ -125,19 +159,40 @@ export class Blob {
     return Math.hypot(mx - this.x, my - this.y) < this.radius;
   }
 
-  update(params: {
-    noise: SimplexNoise;
-    time: number;
-    mouseX: number;
-    mouseY: number;
-    isModalOpen: boolean;
-    mouseSpeed: number;
-  }) {
-    const { noise, time, mouseX, mouseY, isModalOpen, mouseSpeed } = params;
+  private renderTextCache(
+    text: string,
+    font: string,
+    width: number,
+    height: number
+  ): CachedCanvas | null {
+    const canvas = createCachedCanvas(width, height);
+    if (!canvas) return null;
 
-    // Mouse speed affects wobble (clamped, subtle)
-    const speedFactor = Math.min(mouseSpeed * 0.8, 1.5);
-    this.currentWobble += (speedFactor - this.currentWobble) * 0.05;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = font;
+    ctx.fillStyle = "rgba(255,255,255,1)";
+    ctx.fillText(text, width / 2, height / 2);
+
+    return canvas;
+  }
+
+  update(
+    noise: SimplexNoise,
+    time: number,
+    mouseX: number,
+    mouseY: number,
+    isModalOpen: boolean,
+    mouseSpeed: number,
+    quality: number
+  ) {
+    // Mouse speed affects wobble (clamped + quality aware).
+    const speedFactor = Math.min(mouseSpeed * (0.6 + quality * 0.2), 1.2);
+    this.currentWobble += (speedFactor - this.currentWobble) * (0.04 + quality * 0.03);
 
     if (!isModalOpen) {
       this.y -= this.speed;
@@ -147,47 +202,56 @@ export class Blob {
     if (this.y < -320) this.isDead = true;
 
     const isHovered = !isModalOpen && this.hitTest(mouseX, mouseY);
-
     if (isHovered) {
-      this.targetRadius = this.hoverRadius;
-      this.targetAlpha = 1.0;
+      this.hoverFrames = Math.min(this.hoverFrames + 1, 12);
     } else {
-      this.targetRadius = this.baseRadius;
-      this.targetAlpha = 0.48;
+      this.hoverFrames = 0;
     }
+
+    // Ease-in hover visuals to avoid abrupt expensive spikes.
+    const hoverStrength = Math.min(this.hoverFrames / 7, 1);
+    this.targetRadius = this.baseRadius + (this.hoverRadius - this.baseRadius) * hoverStrength;
+    this.targetAlpha = 0.48 + (1 - 0.48) * hoverStrength;
 
     this.radius += (this.targetRadius - this.radius) * 0.1;
     this.alpha += (this.targetAlpha - this.alpha) * 0.08;
-    
+
     // Text fades in slightly behind the blob shape
     const targetTextAlpha = this.alpha * 0.95;
     this.textAlpha += (targetTextAlpha - this.textAlpha) * 0.06;
 
-    // Apply mouse speed to noise parameters
-    const wobbleBoost = 1 + this.currentWobble * 0.4;
-    const speedNoiseAmp = this.noiseAmplitude * wobbleBoost;
-    const speedNoiseSpeed = this.noiseSpeed * (1 + this.currentWobble * 0.3);
+    // Apply mouse speed to noise parameters; low quality = less deformation workload.
+    const wobbleBoost = 1 + this.currentWobble * (0.2 + quality * 0.12);
+    const speedNoiseAmp = this.noiseAmplitude * wobbleBoost * (0.72 + quality * 0.28);
+    const speedNoiseSpeed = this.noiseSpeed * (1 + this.currentWobble * (0.16 + quality * 0.12));
+    const effectiveViscosity = this.viscosity + (1 - quality) * 0.02;
 
     for (const v of this.vertices) {
-      v.update({
+      v.update(
         noise,
         time,
-        originX: this.x,
-        originY: this.y,
-        currentRadius: this.radius,
-        noiseOffset: this.noiseOffset,
+        this.x,
+        this.y,
+        this.radius,
+        this.noiseOffset,
         mouseX,
         mouseY,
-        noiseSpeed: speedNoiseSpeed,
-        noiseAmplitude: speedNoiseAmp,
-        viscosity: this.viscosity,
-      });
+        speedNoiseSpeed,
+        speedNoiseAmp,
+        effectiveViscosity,
+        quality
+      );
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D, isHovered: boolean) {
+  draw(
+    ctx: CanvasRenderingContext2D,
+    isHovered: boolean,
+    viewAlpha: number = 1,
+    quality: number = 1
+  ) {
     ctx.save();
-    ctx.globalAlpha = this.alpha;
+    ctx.globalAlpha = this.alpha * viewAlpha;
 
     // Shape
     ctx.beginPath();
@@ -210,10 +274,11 @@ export class Blob {
 
     // Rim glow
     ctx.lineWidth = 1;
-    if (isHovered) {
+    const hoverStrength = isHovered ? Math.min(this.hoverFrames / 8, 1) : 0;
+    if (hoverStrength > 0.15) {
       ctx.strokeStyle = CONFIG.colors.strokeActive;
       ctx.shadowColor = CONFIG.colors.glow;
-      ctx.shadowBlur = 34;
+      ctx.shadowBlur = (8 + quality * 10) * hoverStrength;
     } else {
       ctx.strokeStyle = CONFIG.colors.stroke;
       ctx.shadowBlur = 0;
@@ -234,27 +299,35 @@ export class Blob {
     const textOpacity = this.textAlpha;
     if (textOpacity < 0.01) return;
 
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+    const tagAlpha = (isHovered ? 0.88 : 0.45) * textOpacity;
+    const titleAlpha = (isHovered ? 0.95 : 0.85) * textOpacity;
 
-    // Meta tag
-    ctx.font = '300 10px ui-sans-serif, system-ui, -apple-system, "Inter", sans-serif';
-    const tagAlpha = isHovered ? 0.88 : 0.45;
-    ctx.fillStyle = `rgba(255,255,255,${tagAlpha * textOpacity})`;
-    const tag = (this.concept.tech || this.concept.type).toUpperCase();
-    ctx.fillText(tag, cx, cy - 20);
+    if (this.tagCanvas) {
+      const tagW = this.tagCanvas.width;
+      const tagH = this.tagCanvas.height;
+      ctx.save();
+      ctx.globalAlpha *= tagAlpha;
+      ctx.drawImage(this.tagCanvas as CanvasImageSource, cx - tagW / 2, cy - 20 - tagH / 2);
+      ctx.restore();
+    }
 
-    // Title
-    ctx.font = '300 26px ui-sans-serif, system-ui, -apple-system, "Inter", sans-serif';
-    const titleAlpha = isHovered ? 0.95 : 0.85;
-    ctx.fillStyle = `rgba(255,255,255,${titleAlpha * textOpacity})`;
-    ctx.fillText(this.concept.title, cx, cy + 8);
+    if (this.titleCanvas) {
+      const titleW = this.titleCanvas.width;
+      const titleH = this.titleCanvas.height;
+      ctx.save();
+      ctx.globalAlpha *= titleAlpha;
+      ctx.drawImage(this.titleCanvas as CanvasImageSource, cx - titleW / 2, cy + 8 - titleH / 2);
+      ctx.restore();
+    }
 
     // Excerpt on hover
-    if (isHovered && textOpacity > 0.5) {
-      ctx.font = '300 11px ui-sans-serif, system-ui, -apple-system, "Inter", sans-serif';
-      ctx.fillStyle = `rgba(255,255,255,${0.68 * textOpacity})`;
-      ctx.fillText(this.concept.desc, cx, cy + 34);
+    if (isHovered && textOpacity > 0.5 && this.descCanvas) {
+      const descW = this.descCanvas.width;
+      const descH = this.descCanvas.height;
+      ctx.save();
+      ctx.globalAlpha *= 0.68 * textOpacity;
+      ctx.drawImage(this.descCanvas as CanvasImageSource, cx - descW / 2, cy + 34 - descH / 2);
+      ctx.restore();
     }
   }
 }

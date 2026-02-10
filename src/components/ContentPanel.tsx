@@ -28,33 +28,33 @@ export function ContentPanel({ concept, onClose }: ContentPanelProps) {
 
   return (
     <div
-      className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-[800ms] pointer-events-auto ${
+      className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-[1000ms] pointer-events-auto ${
         concept ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
-      style={{ background: "rgba(3,3,3,0.95)" }}
+      style={{ background: "rgba(2,2,2,0.97)" }}
       onClick={onClose}
     >
-      <div className="relative w-[85%] max-w-[620px]" onClick={(e) => e.stopPropagation()}>
+      <div className="relative w-[90%] max-w-[580px] py-20" onClick={(e) => e.stopPropagation()}>
         <button
-          className="absolute -top-12 right-0 text-white/40 hover:text-white/80 transition-colors"
+          className="absolute top-8 right-0 text-white/20 hover:text-white/60 transition-colors text-xl font-light"
           onClick={onClose}
+          aria-label="Close"
         >
           ✕
         </button>
 
         {concept && (
-          <div className="text-center">
-            <div className="mb-8 inline-block">
-              <span className="text-[9px] text-white/45 uppercase tracking-[0.4em] border-b border-white/10 pb-2">
+          <div className="text-left animate-[fadeInUp_1.2s_ease-out]">
+            <div>
+              <span className="text-[10px] text-white/30 uppercase tracking-[0.5em]">
                 {concept.tech}
               </span>
+              <h2 className="text-4xl md:text-6xl font-light mb-8 mt-4 text-white/90 tracking-tight">
+                {concept.title}
+              </h2>
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-light mb-8 text-white/90 tracking-tight">
-              {concept.title}
-            </h2>
-
-            <div className="mx-auto max-w-lg">
+            <div className="mx-auto max-w-lg text-white/70 font-light leading-relaxed text-sm tracking-wide whitespace-pre-line">
               <NoteView body={concept.body} sources={concept.sources} />
             </div>
           </div>

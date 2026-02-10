@@ -2,8 +2,7 @@ export type ConceptType =
   | "sensation"
   | "cognition"
   | "reality"
-  | "meta"
-  | "contemplative";
+  | "meta";
 
 export type ConceptBlock =
   | { kind: "paragraph"; text: string }
