@@ -8,7 +8,7 @@ export const concepts: Concept[] = [
     title: "Emptiness",
     tech: "reification",
     desc: "No fixed essence.",
-    mechanism: "The mind tends to treat labels as solid things. Looking at parts, context, and causes can make that \"fixed object\" feeling soften.",
+    mechanism: "Labels harden into apparent objects; examining parts, context, and causes softens the edges back out.",
     body: [
       { kind: "paragraph", text: "Emptiness is often misunderstood as nihilism. Here it means something simpler: things don’t stand on their own. What something is depends on parts, context, and the way a mind groups it into an object." },
       { kind: "heading", text: "Two Lenses" },
@@ -29,7 +29,7 @@ export const concepts: Concept[] = [
     title: "Impermanence",
     tech: "inference",
     desc: "Everything changes.",
-    mechanism: "Perception updates continuously. The mind stitches those updates into a feeling of continuity, even though the signal is always changing.",
+    mechanism: "The signal is always updating; the mind stitches those updates into a feeling of continuity.",
     body: [
       { kind: "paragraph", text: "Impermanence isn't just a philosophical concept—it's a direct observation. Look closely at any experience: sensations arise and pass, thoughts appear and dissolve, emotions swell and fade." },
       { kind: "paragraph", text: "The body you had seven years ago has been completely replaced at the cellular level. The person you were yesterday exists only in memory. Change isn't happening TO a stable self; change is all there is." },
@@ -41,6 +41,7 @@ export const concepts: Concept[] = [
         "Radical impermanence: there is no 'moment' that stays—just ceaseless flow",
       ]},
       { kind: "paragraph", text: "Contemplating impermanence isn't morbid. It's clarifying. It reveals what actually matters and loosens the grip of petty concerns." },
+      { kind: "question", text: "What in your current experience is staying the same? Look closely." },
     ],
     sources: [
       { title: "The Order of Time", author: "Carlo Rovelli" },
@@ -52,7 +53,7 @@ export const concepts: Concept[] = [
     title: "Self-Model",
     tech: "narrative",
     desc: "A useful fiction.",
-    mechanism: "The mind keeps a running model of \"me\" from body signals, memory, and goals. It’s useful for coordination, but it can be mistaken for a thing.",
+    mechanism: "Body signals, memory, and goals get bundled into a running model labeled 'me.'",
     body: [
       { kind: "paragraph", text: "Your sense of being a continuous self—the feeling of being 'you'—is a construction. The brain builds a model of itself as an agent in the world, and this model becomes so seamless that we mistake it for reality." },
       { kind: "quote", text: "The self is not a thing but a process.", attribution: "Thomas Metzinger" },
@@ -79,7 +80,7 @@ export const concepts: Concept[] = [
     title: "Duality",
     tech: "perspective",
     desc: "Subject ↔ object.",
-    mechanism: "The mind separates \"self-caused\" from \"world-caused\" signals. In flow or strong focus, that split can soften, and the scene can feel less divided.",
+    mechanism: "The brain tags signals as 'mine' or 'world'; under certain conditions, that tagging relaxes.",
     body: [
       { kind: "paragraph", text: "Ordinary experience feels dualistic: there's a subject (you) experiencing objects (the world). You seem to be 'in here' looking 'out there.' This structure feels so basic that questioning it seems absurd." },
       { kind: "paragraph", text: "Yet this duality is itself an appearance within consciousness. The sense of being a separate observer is part of what's being observed—another content of experience, not its container." },
@@ -98,7 +99,7 @@ export const concepts: Concept[] = [
     title: "Suffering",
     tech: "resistance",
     desc: "Resistance to what is.",
-    mechanism: "When reality differs from what the mind expects or wants, tension rises. Holding on to the mismatch keeps the feeling running.",
+    mechanism: "A gap between expectation and reality triggers tension; holding onto the gap keeps it running.",
     body: [
       { kind: "paragraph", text: "A common framing is that \"life is suffering.\" The observation here is narrower: there is often a pervasive unsatisfactoriness—a subtle wrongness, a sense that something is missing or needs to be different—even when nothing is overtly wrong." },
       { kind: "heading", text: "Three Forms" },
@@ -124,7 +125,7 @@ export const concepts: Concept[] = [
     title: "Qualia",
     tech: "phenomenology",
     desc: "The felt texture.",
-    mechanism: "We can map brain activity linked to experiences like color or pain. But mapping is not the same as explaining why any of it feels like anything.",
+    mechanism: "Neural correlates can be mapped, but mapping is not the same as explaining why anything feels like something.",
     body: [
       { kind: "paragraph", text: "Qualia are the felt qualities of experience—the redness of red, the painfulness of pain, the taste of coffee. They're what it's LIKE to have an experience, not just the functional or informational aspects." },
       { kind: "quote", text: "No amount of physical description of a bat's sonar system tells you what it's like to be a bat.", attribution: "Thomas Nagel" },
@@ -132,6 +133,7 @@ export const concepts: Concept[] = [
       { kind: "insight", text: "Qualia are simultaneously the most obvious thing in the world (your current experience is full of them) and the most mysterious (no one knows how matter produces them)." },
       { kind: "separator" },
       { kind: "paragraph", text: "Some philosophers deny qualia exist as irreducible features of reality. Others argue they're the only thing we know for certain. This debate gets at the heart of the mind-body problem." },
+      { kind: "question", text: "Could you ever fully describe the taste of salt to someone who has never tasted it?" },
     ],
     sources: [
       { title: "What Is It Like to Be a Bat?", author: "Thomas Nagel" },
@@ -144,7 +146,7 @@ export const concepts: Concept[] = [
     title: "Predictive Processing",
     tech: "inference",
     desc: "Controlled hallucination.",
-    mechanism: "The brain constantly predicts what’s next and updates when surprised. Perception is a best guess shaped by both data and expectations.",
+    mechanism: "The brain generates predictions and corrects by surprise; perception is the best guess, not raw data.",
     body: [
       { kind: "paragraph", text: "The predictive processing framework proposes that the brain is fundamentally a prediction machine. Rather than passively receiving sensory data, it actively generates predictions about what it expects to sense—and only processes the 'prediction errors' (the differences between prediction and reality)." },
       { kind: "heading", text: "Key Ideas" },
@@ -168,7 +170,7 @@ export const concepts: Concept[] = [
     title: "Hard Problem",
     tech: "philosophy",
     desc: "The explanatory gap.",
-    mechanism: "No known physical or computational account bridges the gap between objective neural description and subjective experience. The problem persists across functionalist, reductive, and information-theoretic frameworks.",
+    mechanism: "No physical or computational account has bridged the gap between neural description and felt experience.",
     body: [
       { kind: "paragraph", text: "David Chalmers distinguished the 'easy problems' of consciousness (explaining cognitive functions, behavior, neural correlates) from the 'hard problem': why is there subjective experience at all? Why doesn't all this information processing happen 'in the dark,' without any felt quality?" },
       { kind: "quote", text: "Even when we have explained the performance of all the cognitive and behavioral functions, there may still remain a further unanswered question: Why is the performance of these functions accompanied by experience?", attribution: "David Chalmers" },
@@ -189,37 +191,12 @@ export const concepts: Concept[] = [
     ],
   },
   {
-    id: "attention-as-selection",
-    type: "sensation",
-    title: "Attention as Selection",
-    tech: "gating",
-    desc: "Gating awareness.",
-    mechanism: "Attention boosts some signals and dampens others, so only a slice becomes vivid. Brain networks coordinate this gating and suppression.",
-    body: [
-      { kind: "paragraph", text: "At any moment, vastly more information reaches your senses than can be processed. Attention is the mechanism that selects which subset of this information gets deep processing and enters conscious awareness." },
-      { kind: "paragraph", text: "The famous 'invisible gorilla' experiment demonstrated this starkly: when focused on counting basketball passes, most people completely fail to notice a person in a gorilla suit walking through the scene." },
-      { kind: "insight", text: "What you attend to becomes your reality. Unattended stimuli might as well not exist for consciousness." },
-      { kind: "heading", text: "Types of Attention" },
-      { kind: "list", items: [
-        "Selective attention: focusing on one thing while ignoring others",
-        "Sustained attention: maintaining focus over time",
-        "Executive attention: managing conflicts between different demands",
-        "Open attention: receptive awareness without a narrow focus",
-      ]},
-      { kind: "paragraph", text: "Training attention often involves narrowing focus or widening it. Either way, it shows attention can be shaped, not just “had.”" },
-    ],
-    sources: [
-      { title: "The Invisible Gorilla", author: "Christopher Chabris & Daniel Simons" },
-      { title: "Altered Traits", author: "Daniel Goleman & Richard Davidson" },
-    ],
-  },
-  {
     id: "dependent-origination",
     type: "reality",
     title: "Conditionality",
     tech: "causation",
     desc: "Nothing stands alone.",
-    mechanism: "Experience depends on conditions: body state, context, memory, expectation, and attention. Change one condition and the whole pattern can shift.",
+    mechanism: "Change one upstream condition—body state, context, attention—and the downstream pattern reshapes.",
     body: [
       { kind: "paragraph", text: "Nothing in experience arrives alone. What you feel, think, and perceive is shaped by a mesh of conditions: physiology, environment, memory, expectation, and attention. Treating any element as independent tends to produce confused explanations." },
       { kind: "quote", text: "When conditions change, the experience changes. Remove a condition, and the downstream pattern dissolves." },
@@ -238,7 +215,7 @@ export const concepts: Concept[] = [
     title: "Nondual Awareness",
     tech: "recognition",
     desc: "Prior to separation.",
-    mechanism: "Some states reduce the usual sense of being a separate observer. Reports correlate with less self-focused processing.",
+    mechanism: "Self-referential processing quiets; the boundary between observer and observed stops being drawn.",
     body: [
       { kind: "paragraph", text: "Nondual awareness refers to a mode of experiencing in which the usual sense of being a subject observing objects collapses. There's just experience happening, without the feeling of being a separate experiencer standing apart from it." },
       { kind: "paragraph", text: "This isn't a mystical merger with the cosmos. It's more subtle: the recognition that the sense of being a separate self is itself an appearance within consciousness, not the container of consciousness." },
@@ -264,12 +241,13 @@ export const concepts: Concept[] = [
     title: "Phenomenal Binding",
     tech: "integration",
     desc: "Unity from fragments.",
-    mechanism: "The brain combines separate features (color, shape, sound) into one scene. We have candidates for how this happens, but the full story isn’t settled.",
+    mechanism: "Distributed regions process color, motion, and sound separately; something stitches them into one scene.",
     body: [
       { kind: "paragraph", text: "Right now, you're having a unified conscious experience—colors, sounds, thoughts, sensations, all bound together into a single coherent scene. But the brain processes these through separate, distributed regions. How do they come together?" },
       { kind: "paragraph", text: "This is the 'binding problem.' Color is processed in one area, motion in another, faces in another. Yet your experience isn't a disconnected jumble—it's an integrated whole. The mechanism of this integration remains mysterious." },
       { kind: "insight", text: "The unity of consciousness that feels most basic and obvious is actually one of the deepest puzzles in neuroscience." },
       { kind: "paragraph", text: "Some theories invoke neural synchrony—neurons firing together at the same frequency. Others propose a 'global workspace' that integrates information. But none fully explain why integration should produce FELT unity." },
+      { kind: "question", text: "Right now, your experience feels like one thing. Why doesn’t it feel like dozens?" },
     ],
     sources: [
       { title: "A Universe of Consciousness", author: "Gerald Edelman & Giulio Tononi" },
@@ -282,7 +260,7 @@ export const concepts: Concept[] = [
     title: "Metacognition",
     tech: "recursion",
     desc: "Awareness of awareness.",
-    mechanism: "We can monitor our own thinking—confidence, error, confusion—and adjust. This likely relies on prefrontal monitoring systems.",
+    mechanism: "Prefrontal circuits monitor ongoing cognition—confidence, error, confusion—and feed corrections back in.",
     body: [
       { kind: "paragraph", text: "Metacognition is cognition about cognition—the capacity to monitor and regulate your own mental processes. It's knowing that you know, doubting your certainty, recognizing when you're confused." },
       { kind: "paragraph", text: "This recursive capacity lets us evaluate beliefs, correct errors, and learn how to learn. It’s also a core skill in attention training: you need to notice when attention has wandered." },
@@ -307,13 +285,14 @@ export const concepts: Concept[] = [
     title: "Craving",
     tech: "prediction",
     desc: "The pull of wanting.",
-    mechanism: "Reward learning tracks gaps between expected and received reward. That gap can keep pulling attention toward the goal.",
+    mechanism: "Reward circuitry tracks the gap between expected and received; the gap itself becomes the pull.",
     body: [
       { kind: "paragraph", text: "Craving is the push-pull of wanting: reaching toward pleasant experiences, pushing away unpleasant ones, and the restless dissatisfaction that comes from not having what we want or having what we don't want." },
       { kind: "paragraph", text: "In modern terms, craving can be understood as a mismatch between expected and received pleasure. When reality falls short, the system keeps pushing for resolution—but the target keeps moving." },
       { kind: "insight", text: "Craving isn't about the object. It's about the gap between expectation and experience—and that gap can be watched directly." },
       { kind: "quote", text: "The second layer of suffering—what we add on top—can be optional." },
       { kind: "paragraph", text: "There’s the initial pain, and then there’s what we add: fighting it, replaying it, forecasting it. The second layer isn’t always necessary." },
+      { kind: "question", text: "Next time you want something, check: are you wanting the thing, or wanting the wanting to stop?" },
     ],
     sources: [
       { title: "The Craving Mind", author: "Judson Brewer" },
@@ -326,7 +305,7 @@ export const concepts: Concept[] = [
     title: "Equanimity",
     tech: "balance",
     desc: "Balanced awareness.",
-    mechanism: "Reactivity can soften when threat responses calm and regulation strengthens. The nervous system stays steadier under change.",
+    mechanism: "When threat responses quiet and regulation strengthens, the nervous system stays steadier under change.",
     body: [
       { kind: "paragraph", text: "Equanimity is not indifference or detachment. It's a balanced, non-reactive awareness that allows experience to be as it is—pleasant, unpleasant, or neutral—without the compulsive push-pull of craving and aversion." },
       { kind: "paragraph", text: "It's not that you don't care; it's that caring doesn't destabilize you. Joy arises, and there's equanimity. Pain arises, and there's equanimity. The weather of experience changes, but awareness remains balanced." },
@@ -345,7 +324,7 @@ export const concepts: Concept[] = [
     title: "No-Self",
     tech: "investigation",
     desc: "No fixed self.",
-    mechanism: "The sense of \"me\" is built from memory, body signals, and narrative. When that construction loosens, experience continues but ownership can feel less central.",
+    mechanism: "Memory, body signals, and narrative construct 'me'; loosen the construction and ownership fades while experience continues.",
     body: [
       { kind: "paragraph", text: "Look for a fixed, independent \"self\" in immediate experience: you find thoughts, sensations, memories, intentions—but it’s surprisingly hard to locate a separate entity that owns them. The self may be better understood as a working model the mind uses to coordinate behavior." },
       { kind: "paragraph", text: "This doesn't mean nothing exists or that you're not real. It means that what we call 'self' is a process, not a thing—a pattern of activity, not a fixed entity. The self is more like a wave than a particle." },

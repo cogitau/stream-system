@@ -32,28 +32,33 @@ Prefer:
 
 - short sentences
 - concrete words
-- one optional technical anchor in **Mechanism**, not everywhere
+- one optional technical anchor in **How**, not everywhere
 
 ## Concept content structure (UI)
 
 The expanded concept view is intentionally minimal:
 
 - **Lead**: exactly **one** paragraph (the hook)
-- **Mechanism**: one short paragraph of scientific grounding
-- **More**: remaining content (collapsed by default)
-- **Sources**: references (collapsed by default)
+- **How**: one sentence describing the underlying process (replaces "Mechanism")
+  - Should answer "how does this work?" at the system level
+  - Must **not** repeat the lead paragraph's content — different angle
+  - Stays visible (not collapsed)
+- **More**: remaining content + sources (collapsed by default)
 
 ## Science terms policy
 
 Neuroscience / cognitive science terms should:
 
-- appear in **Mechanism** text
+- appear in **How** text (one sentence only)
 - not dominate the lead paragraph
 - never be used as a concept title
 
 ## Questions policy
 
-Questions are optional and rare. If present, they should be:
+Questions appear in roughly **one third** of concepts. They should:
 
-- epistemic (challenge the model, not the reader)
-- non-instructional (no guided introspection prompts)
+- make the reader pause and introspect ("huh" moments)
+- be experiential, not academic — point attention somewhere concrete
+- never sound like guided meditation prompts ("Notice…", "Try to…")
+- feel like a parting thought, not an assignment
+- render **above** the collapsed **More** section (always visible)

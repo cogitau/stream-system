@@ -22,6 +22,25 @@ interface StreamCanvasProps {
 }
 
 const CATEGORY_ORDER: ConceptType[] = ["sensation", "cognition", "reality", "meta"];
+const RESONANCE_PROFILE: Record<ConceptType, { reach: number; strength: number }> = {
+  // Sensation: wider, softer
+  sensation: { reach: 640, strength: 0.45 },
+  // Cognition: narrower, cleaner
+  cognition: { reach: 500, strength: 0.68 },
+  // Reality: medium reach, grounded response
+  reality: { reach: 560, strength: 0.58 },
+  // Meta: shortest, quietest
+  meta: { reach: 420, strength: 0.4 },
+};
+type Wake = {
+  x: number;
+  y: number;
+  r: number;
+  alpha: number;
+  grow: number;
+  fade: number;
+  color: string;
+};
 
 export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
   function StreamCanvas(
@@ -55,6 +74,8 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
       lastTs: 0,
     });
     const lastCursorRef = useRef<string>("default");
+    const wakesRef = useRef<Wake[]>([]);
+    const parallaxRef = useRef({ x: 0, y: 0 });
     const resetRequestedRef = useRef(true);
     const activeFilterRef = useRef<ConceptType | "all">(activeFilter);
     const isModalOpenRef = useRef(isModalOpen);
@@ -208,6 +229,9 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
 
       const resetSimulation = () => {
         blobsRef.current = [];
+        wakesRef.current = [];
+        parallaxRef.current.x = 0;
+        parallaxRef.current.y = 0;
         spawnCountRef.current = 0;
         if (introCompleteRef.current) {
           spawnBlob(true);
@@ -259,11 +283,22 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
         if (isModalOpenRef.current) return;
         const { w, h } = viewportRef.current;
         const scale = viewRef.current.scale;
-        const mx = (e.clientX - w / 2) / scale + w / 2;
-        const my = (e.clientY - h / 2) / scale + h / 2;
+        const mx = (e.clientX - w / 2) / scale + w / 2 - parallaxRef.current.x;
+        const my = (e.clientY - h / 2) / scale + h / 2 - parallaxRef.current.y;
         for (let i = blobsRef.current.length - 1; i >= 0; i--) {
           const b = blobsRef.current[i];
           if (b.hitTest(mx, my)) {
+            // Click wake: subtle, short-lived ring that marks inquiry.
+            if (wakesRef.current.length >= 10) wakesRef.current.shift();
+            wakesRef.current.push({
+              x: b.x,
+              y: b.y,
+              r: Math.max(18, b.radius * 0.22),
+              alpha: 0.32,
+              grow: 2.2,
+              fade: 0.015,
+              color: b.glowTint,
+            });
             onConceptClickRef.current(b.concept);
             return;
           }
@@ -286,17 +321,67 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
 
         ctx.clearRect(0, 0, w, h);
 
+        // Subtle camera parallax (pointer-driven), smoothed over time.
+        const mxScreen = mouseRef.current.x;
+        const myScreen = mouseRef.current.y;
+        const pointerActive =
+          mxScreen >= 0 &&
+          mxScreen <= w &&
+          myScreen >= 0 &&
+          myScreen <= h &&
+          !isModalOpenRef.current;
+        const targetParallaxX = pointerActive ? ((mxScreen - w / 2) / Math.max(w, 1)) * 20 : 0;
+        const targetParallaxY = pointerActive ? ((myScreen - h / 2) / Math.max(h, 1)) * 14 : 0;
+        parallaxRef.current.x += (targetParallaxX - parallaxRef.current.x) * 0.08;
+        parallaxRef.current.y += (targetParallaxY - parallaxRef.current.y) * 0.08;
+        const parallaxX = parallaxRef.current.x;
+        const parallaxY = parallaxRef.current.y;
+
+        // Draw and decay inquiry wakes.
+        ctx.save();
+        ctx.translate(parallaxX, parallaxY);
+        for (let i = wakesRef.current.length - 1; i >= 0; i--) {
+          const wk = wakesRef.current[i];
+          wk.r += wk.grow;
+          wk.alpha -= wk.fade;
+          if (wk.alpha <= 0.01) {
+            wakesRef.current.splice(i, 1);
+            continue;
+          }
+          ctx.save();
+          ctx.globalAlpha = wk.alpha * viewAlpha;
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = wk.color;
+          ctx.shadowColor = wk.color;
+          ctx.shadowBlur = 7 * wk.alpha;
+          ctx.beginPath();
+          ctx.arc(wk.x, wk.y, wk.r, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+        ctx.restore();
+
         const now = performance.now();
         if (now > nextSpawnRef.current) {
           spawnBlob(false);
           nextSpawnRef.current = now + CONFIG.spawnEveryMs;
         }
 
-        const mxScreen = mouseRef.current.x;
-        const myScreen = mouseRef.current.y;
+        // Keep at least two blobs visible while simulation is active.
+        if (
+          introCompleteRef.current &&
+          !isModalOpenRef.current &&
+          blobsRef.current.length < 2
+        ) {
+          const needed = Math.min(2 - blobsRef.current.length, CONFIG.maxBlobs - blobsRef.current.length);
+          for (let i = 0; i < needed; i++) {
+            spawnBlob(true);
+          }
+        }
+
         const mouseSpeed = mouseRef.current.speed;
-        const mx = (mxScreen - w / 2) / scale + w / 2;
-        const my = (myScreen - h / 2) / scale + h / 2;
+        const mx = (mxScreen - w / 2) / scale + w / 2 - parallaxX;
+        const my = (myScreen - h / 2) / scale + h / 2 - parallaxY;
         mouseRef.current.speed *= 0.96;
 
         const doCollision =
@@ -342,6 +427,19 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
           lastCursorRef.current = "default";
         }
 
+        let hoveredBlob: Blob | null = null;
+        if (!isModalOpenRef.current) {
+          for (let i = blobsRef.current.length - 1; i >= 0; i--) {
+            const candidate = blobsRef.current[i];
+            if (candidate.hitTest(mx, my)) {
+              hoveredBlob = candidate;
+              break;
+            }
+          }
+        }
+
+        ctx.save();
+        ctx.translate(parallaxX, parallaxY);
         for (let i = blobsRef.current.length - 1; i >= 0; i--) {
           const b = blobsRef.current[i];
           b.update(
@@ -354,11 +452,24 @@ export const StreamCanvas = forwardRef<StreamCanvasRef, StreamCanvasProps>(
             quality
           );
 
-          const hovered = !isModalOpenRef.current && b.hitTest(mx, my);
-          b.draw(ctx, hovered, viewAlpha, quality);
+          const hovered = hoveredBlob === b;
+          let resonance = 0;
+          if (hoveredBlob && !hovered && hoveredBlob.concept.type === b.concept.type) {
+            const dx = b.x - hoveredBlob.x;
+            const dy = b.y - hoveredBlob.y;
+            const dist = Math.hypot(dx, dy);
+            const profile = RESONANCE_PROFILE[hoveredBlob.concept.type];
+            const reach = profile.reach;
+            if (dist < reach) {
+              resonance = (1 - dist / reach) * profile.strength;
+            }
+          }
+
+          b.draw(ctx, hovered, viewAlpha, quality, resonance);
 
           if (b.isDead) blobsRef.current.splice(i, 1);
         }
+        ctx.restore();
 
         rafRef.current = requestAnimationFrame(loop);
       };

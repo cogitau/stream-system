@@ -26,23 +26,42 @@ export function ContentPanel({ concept, onClose }: ContentPanelProps) {
     }
   }, [concept, handleKeyDown]);
 
-  /** Split body into: first paragraph (lead) + everything else (rest). */
+  /**
+   * Split body into:
+   * - lead: first paragraph (always visible)
+   * - question: any question block (always visible, above "More")
+   * - rest: everything else (collapsed under "More")
+   */
   const splitBody = (body: ConceptBlock[]) => {
-    if (body.length === 0) return { lead: null as ConceptBlock | null, rest: [] as ConceptBlock[] };
+    if (body.length === 0) {
+      return {
+        lead: null as ConceptBlock | null,
+        question: null as ConceptBlock | null,
+        rest: [] as ConceptBlock[],
+      };
+    }
 
     // The lead is the first paragraph block.
     const leadIdx = body.findIndex((b) => b.kind === "paragraph");
     const lead = leadIdx >= 0 ? body[leadIdx] : null;
 
-    // Rest is everything else, skipping the lead paragraph and any leading separator.
-    let rest = leadIdx >= 0
-      ? [...body.slice(0, leadIdx), ...body.slice(leadIdx + 1)]
-      : [...body];
+    // The question is the last question block (if any).
+    let questionIdx = -1;
+    for (let i = body.length - 1; i >= 0; i--) {
+      if (body[i]?.kind === "question") {
+        questionIdx = i;
+        break;
+      }
+    }
+    const question = questionIdx >= 0 ? body[questionIdx] : null;
+
+    // Rest is everything else, excluding lead and question (and any leading separator).
+    let rest = body.filter((_, idx) => idx !== leadIdx && idx !== questionIdx);
     while (rest.length > 0 && rest[0]?.kind === "separator") {
       rest = rest.slice(1);
     }
 
-    return { lead, rest };
+    return { lead, question, rest };
   };
 
   return (
@@ -68,8 +87,10 @@ export function ContentPanel({ concept, onClose }: ContentPanelProps) {
         {concept && (
           <div className="text-left animate-[fadeInUp_1.2s_ease-out]">
             {(() => {
-              const { lead, rest } = splitBody(concept.body);
+              const { lead, question, rest } = splitBody(concept.body);
               const hasRest = rest.length > 0;
+              const hasSources = Boolean(concept.sources && concept.sources.length > 0);
+              const hasMore = hasRest || hasSources;
 
               return (
                 <>
@@ -81,9 +102,6 @@ export function ContentPanel({ concept, onClose }: ContentPanelProps) {
                     <h2 className="text-4xl md:text-6xl font-light mt-4 text-white/90 tracking-tight">
                       {concept.title}
                     </h2>
-                    <div className="mt-3 text-white/40 text-sm font-light max-w-md">
-                      {concept.desc}
-                    </div>
                   </div>
 
                   {/* Lead paragraph — one paragraph, the hook */}
@@ -93,45 +111,51 @@ export function ContentPanel({ concept, onClose }: ContentPanelProps) {
                     </div>
                   )}
 
-                  {/* Mechanism — scientific grounding */}
+                  {/* How — one-line process note */}
                   {concept.mechanism && (
-                    <details className="mt-8 group max-w-lg" open>
-                      <summary className="cursor-pointer select-none text-[10px] uppercase tracking-[0.4em] text-white/30 hover:text-white/60 transition-colors">
-                        Mechanism
-                      </summary>
-                      <p className="mt-4 text-white/50 font-light leading-relaxed text-xs tracking-wide">
+                    <section className="mt-8 max-w-lg rounded-sm border border-white/10 bg-white/[0.02] px-4 py-3">
+                      <div className="text-[9px] uppercase tracking-[0.3em] text-white/40">
+                        How
+                      </div>
+                      <p className="mt-2 text-white/60 font-light leading-relaxed text-xs tracking-normal">
                         {concept.mechanism}
                       </p>
-                    </details>
+                    </section>
                   )}
 
-                  {/* More — remaining body blocks */}
-                  {hasRest && (
+                  {/* Question — always visible (not inside "More") */}
+                  {question && (
+                    <div className="mt-8 max-w-lg text-white/65 font-light leading-relaxed text-sm tracking-wide">
+                      <NoteView body={[question]} />
+                    </div>
+                  )}
+
+                  {/* More — remaining body blocks + sources */}
+                  {hasMore && (
                     <details className="mt-8 group max-w-lg">
                       <summary className="cursor-pointer select-none text-[10px] uppercase tracking-[0.4em] text-white/30 hover:text-white/60 transition-colors">
                         More
                       </summary>
-                      <div className="mt-6 text-white/70 font-light leading-relaxed text-sm tracking-wide whitespace-pre-line">
-                        <NoteView body={rest} />
-                      </div>
-                    </details>
-                  )}
+                      {hasRest && (
+                        <div className="mt-6 text-white/70 font-light leading-relaxed text-sm tracking-wide whitespace-pre-line">
+                          <NoteView body={rest} />
+                        </div>
+                      )}
 
-                  {/* Sources */}
-                  {concept.sources && concept.sources.length > 0 && (
-                    <details className="mt-6 group max-w-lg">
-                      <summary className="cursor-pointer select-none text-[10px] uppercase tracking-[0.4em] text-white/30 hover:text-white/60 transition-colors">
-                        Sources
-                      </summary>
-                      <div className="mt-5 text-white/55 text-xs leading-relaxed">
-                        {concept.sources.map((s, i) => (
-                          <div key={i} className="mb-3">
-                            <span className="text-white/70">{s.title}</span>
-                            {s.author && <span> — {s.author}</span>}
-                            {s.note && <div className="text-white/40 mt-1">{s.note}</div>}
+                      {hasSources && (
+                        <div className={`${hasRest ? "mt-6 pt-5 border-t border-white/10" : "mt-5"} text-white/55 text-xs leading-relaxed`}>
+                          <div className="text-[9px] uppercase tracking-[0.28em] text-white/35 mb-3">
+                            Sources
                           </div>
-                        ))}
-                      </div>
+                          {concept.sources!.map((s, i) => (
+                            <div key={i} className="mb-3">
+                              <span className="text-white/70">{s.title}</span>
+                              {s.author && <span> — {s.author}</span>}
+                              {s.note && <div className="text-white/40 mt-1">{s.note}</div>}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </details>
                   )}
                 </>
